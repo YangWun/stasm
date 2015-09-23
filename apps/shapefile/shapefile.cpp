@@ -8,6 +8,8 @@
 #include "shapefile.h"
 #include "stasm_regex.h"
 
+#include <cstring>
+
 namespace stasm
 {
 // Return the current line number in the given file.
@@ -725,7 +727,7 @@ void ProcessShapeFileArg(
 
     strcpy(shapepath, *argv);
     int n = STRNLEN(shapepath, SLEN);
-    if (n < 6 || _stricmp(shapepath + n - 6, ".shape"))
+    if (n < 6 || strcasecmp(shapepath + n - 6, ".shape"))
         Err("Invalid shape file name %s (expected a .shape suffix)", shapepath);
 
     nshapes = 0;

@@ -3,33 +3,37 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "opencv/highgui.h"
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include "stasm_lib.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-    static const char* const path = "../data/testface.jpg";
+    std::string path = "../data/testface.jpg";
+    if (argc > 1)
+        path = argv[1];
 
     cv::Mat_<unsigned char> img(cv::imread(path, CV_LOAD_IMAGE_GRAYSCALE));
 
     if (!img.data)
     {
-        printf("Cannot load %s\n", path);
+        printf("Cannot load %s\n", path.c_str());
         exit(1);
     }
+    cv::resize(img, img, cv::Size(100, 100));
 
     int foundface;
     float landmarks[2 * stasm_NLANDMARKS]; // x,y coords (note the 2)
 
     if (!stasm_search_single(&foundface, landmarks,
-                             (const char*)img.data, img.cols, img.rows, path, "../data"))
+                             (const char*)img.data, img.cols, img.rows, path.c_str(), "../data"))
     {
         printf("Error in stasm_search_single: %s\n", stasm_lasterr());
         exit(1);
     }
 
     if (!foundface)
-         printf("No face found in %s\n", path);
+         printf("No face found in %s\n", path.c_str());
     else
     {
         // draw the landmarks on the image as white dots (image is monochrome)
