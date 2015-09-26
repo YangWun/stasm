@@ -1,6 +1,6 @@
 // yaw00.mh: list of ASM descriptor models (machine generated from a 77 point landmark table)
 //
-// Command: tasm -d test_tasmout -w ../tasm/shapes/muct77_short.shape 0 0 i000q|i003s|i017q
+// Command: tasm -d test_tasmout -w ../tasm/shapes/muct77_short.shape
 // STASM_VERSION "4.1.0"
 // TASM_MODNAME "yaw00"
 // TASM_DATADIR "../data"

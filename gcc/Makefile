@@ -144,32 +144,32 @@ mdiff$(EXE): ../apps/mdiff/mdiff.cpp
 
 test_minimal:
 	./minimal
-	cmp minimal.bmp ../tests/mingw/minimal/minimal.bmp
+	cmp minimal.bmp ../tests/minimal/minimal.bmp
 	@rm minimal.bmp
 
 test_minimal2:
 	./minimal2
-	cmp minimal2.bmp ../tests/mingw/minimal2/minimal2.bmp
+	cmp minimal2.bmp ../tests/minimal/minimal2.bmp
 	@rm minimal2.bmp
 
 test_stasm_lib_multi0_minwidth25:
 	./test_stasm_lib 0 25 1 ../tests/data/testmulti.jpg
-	./mdiff stasm.log ../tests/mingw/stasm_lib/multi0_minwidth25/stasm.log
+	./mdiff stasm.log ../tests/stasm_lib/multi0_minwidth25/stasm.log
 	@rm stasm.log test_stasm_lib_auto.bmp test_stasm_lib_pinned.bmp
 
 test_stasm_lib_multi1_minwidth25:
 	./test_stasm_lib 1 25 1 ../tests/data/testmulti.jpg
-	./mdiff stasm.log ../tests/mingw/stasm_lib/multi1_minwidth25/stasm.log
+	./mdiff stasm.log ../tests/stasm_lib/multi1_minwidth25/stasm.log
 	@rm stasm.log test_stasm_lib_auto.bmp
 
 test_stasm_lib_multi0_minwidth10:
 	./test_stasm_lib 0 10 1 ../tests/data/testmulti.jpg
-	./mdiff stasm.log ../tests/mingw/stasm_lib/multi0_minwidth10/stasm.log
+	./mdiff stasm.log ../tests/stasm_lib/multi0_minwidth10/stasm.log
 	@rm stasm.log test_stasm_lib_auto.bmp
 
 test_stasm_lib_multi1_minwidth10:
 	./test_stasm_lib 1 10 1 ../tests/data/testmulti.jpg
-	./mdiff stasm.log ../tests/mingw/stasm_lib/multi1_minwidth10/stasm.log
+	./mdiff stasm.log ../tests/stasm_lib/multi1_minwidth10/stasm.log
 	@rm stasm.log test_stasm_lib_auto.bmp
 
 #test_stasm_lib_err:
@@ -179,51 +179,51 @@ test_stasm_lib_multi1_minwidth10:
 
 test_stasm_main:
 	./stasm ../data/testface.jpg
-	./mdiff stasm.log ../tests/mingw/stasm_main/single/test_stasm_main.log
-	cmp testface_stasm.bmp ../tests/mingw/stasm_main/single/testface_stasm.bmp
+	./mdiff stasm.log ../tests/stasm_main/single/test_stasm_main.log
+	cmp testface_stasm.bmp ../tests/stasm_main/single/testface_stasm.bmp
 	@rm stasm.log testface_stasm.bmp
 	./stasm -m ../tests/data/testmulti.jpg
-	./mdiff stasm.log ../tests/mingw/stasm_main/multi/test_stasm_main_multi.log
+	./mdiff stasm.log ../tests/stasm_main/multi/test_stasm_main_multi.log
 	@rm stasm.log testmulti_stasm.bmp
 	./stasm -d -m -s -c ../tests/data/testmulti.jpg
-	./mdiff stasm.log ../tests/mingw/stasm_main/multi/test_stasm_main_multi_small.log
-	cmp testmulti_stasm.bmp ../tests/mingw/stasm_main/multi/testmulti_stasm.bmp
+	./mdiff stasm.log ../tests/stasm_main/multi/test_stasm_main_multi_small.log
+	cmp testmulti_stasm.bmp ../tests/stasm_main/multi/testmulti_stasm.bmp
 	@rm stasm.log testmulti_stasm.bmp
 	./stasm -i -n 68 ../data/testface.jpg
-	./mdiff stasm.log ../tests/mingw/stasm_main/multi/test_stasm_main_68.log
+	./mdiff stasm.log ../tests/stasm_main/multi/test_stasm_main_68.log
 	@rm stasm.log
 
 test_swas:
 	./swas -f ../tests/data/testface.shape
-	./mdiff stasm.log ../tests/mingw/swas/swas.log
-	./mdiff fit/testface.fit ../tests/mingw/swas/testface.fit
+	./mdiff stasm.log ../tests/swas/swas.log
+	./mdiff fit/testface.fit ../tests/swas/testface.fit
 	@rm fit/testface.fit
-	cmp testface__ref.bmp ../tests/mingw/swas/testface__ref.bmp
-	cmp testface_stasm.bmp ../tests/mingw/swas/testface_stasm.bmp
+	cmp testface__ref.bmp ../tests/swas/testface__ref.bmp
+	cmp testface_stasm.bmp ../tests/swas/testface_stasm.bmp
 	@rm stasm.log testface_stasm.bmp testface__ref.bmp
 
 test_tasm:
 	@rm -rf test_tasmout
 	./tasm -d test_tasmout -w ../tasm/shapes/muct77_short.shape
-	./mdiff test_tasmout/log/tasm.log ../tests/mingw/tasm_small77/tasm.log
-	./mdiff test_tasmout/log/imputed.shape ../tests/mingw/tasm_small77/imputed.shape
-	./mdiff test_tasmout/mh/yaw00.mh ../tests/mingw/tasm_small77/yaw00.mh
-	./mdiff test_tasmout/mh/yaw00_shapemodel.mh ../tests/mingw/tasm_small77/yaw00_shapemodel.mh
-	./mdiff test_tasmout/mh/yaw00_lev0_p12_classic.mh ../tests/mingw/tasm_small77/yaw00_lev0_p12_classic.mh
-	./mdiff test_tasmout/mh/yaw00_lev1_p06_classic.mh ../tests/mingw/tasm_small77/yaw00_lev1_p06_classic.mh
-	./mdiff test_tasmout/mh/yaw00_lev2_p00_classic.mh ../tests/mingw/tasm_small77/yaw00_lev2_p00_classic.mh
-	./mdiff test_tasmout/mh/yaw00_lev3_p00_classic.mh ../tests/mingw/tasm_small77/yaw00_lev3_p00_classic.mh
-	./mdiff test_tasmout/mh/yaw00_lev0_p16_hat.mh ../tests/mingw/tasm_small77/yaw00_lev0_p16_hat.mh
-	./mdiff test_tasmout/log/lev3_p76_classic.desc ../tests/mingw/tasm_small77/lev3_p76_classic.desc
-	./mdiff test_tasmout/log/lev2_p76_hat.desc ../tests/mingw/tasm_small77/lev2_p76_hat.desc
+	./mdiff test_tasmout/log/tasm.log ../tests/tasm_small77/tasm.log
+	./mdiff test_tasmout/log/imputed.shape ../tests/tasm_small77/imputed.shape
+	./mdiff test_tasmout/mh/yaw00.mh ../tests/tasm_small77/yaw00.mh
+	./mdiff test_tasmout/mh/yaw00_shapemodel.mh ../tests/tasm_small77/yaw00_shapemodel.mh
+	./mdiff test_tasmout/mh/yaw00_lev0_p12_classic.mh ../tests/tasm_small77/yaw00_lev0_p12_classic.mh
+	./mdiff test_tasmout/mh/yaw00_lev1_p06_classic.mh ../tests/tasm_small77/yaw00_lev1_p06_classic.mh
+	./mdiff test_tasmout/mh/yaw00_lev2_p00_classic.mh ../tests/tasm_small77/yaw00_lev2_p00_classic.mh
+	./mdiff test_tasmout/mh/yaw00_lev3_p00_classic.mh ../tests/tasm_small77/yaw00_lev3_p00_classic.mh
+	./mdiff test_tasmout/mh/yaw00_lev0_p16_hat.mh ../tests/tasm_small77/yaw00_lev0_p16_hat.mh
+	./mdiff test_tasmout/log/lev3_p76_classic.desc ../tests/tasm_small77/lev3_p76_classic.desc
+	./mdiff test_tasmout/log/lev2_p76_hat.desc ../tests/tasm_small77/lev2_p76_hat.desc
 	@# p26 is imputed, so test it below
-	./mdiff test_tasmout/mh/yaw00_lev1_p26_hat.mh ../tests/mingw/tasm_small77/yaw00_lev1_p26_hat.mh
+	./mdiff test_tasmout/mh/yaw00_lev1_p26_hat.mh ../mingw/tasm_small77/yaw00_lev1_p26_hat.mh
 	@# p30 is sometimes obscured if eye is closed, so test it below
-	./mdiff test_tasmout/mh/yaw00_lev2_p30_hat.mh ../tests/mingw/tasm_small77/yaw00_lev2_p30_hat.mh
-	cmp test_tasmout/log/landmark00.bmp ../tests/tasm_small77/landmark00.bmp
-	cmp test_tasmout/log/landmark30.bmp ../tests/tasm_small77/landmark30.bmp
-	cmp test_tasmout/log/meanshape.bmp ../tests/tasm_small77/meanshape.bmp
-	cmp test_tasmout/log/shape17.bmp ../tests/tasm_small77/shape17.bmp
+	./mdiff test_tasmout/mh/yaw00_lev2_p30_hat.mh ../tests/tasm_small77/yaw00_lev2_p30_hat.mh
+	cmp test_tasmout/log/landmark00.bmp ../tasm_small77/landmark00.bmp
+	cmp test_tasmout/log/landmark30.bmp ../tasm_small77/landmark30.bmp
+	cmp test_tasmout/log/meanshape.bmp ../tasm_small77/meanshape.bmp
+	cmp test_tasmout/log/shape17.bmp ../tasm_small77/shape17.bmp
 	@rm -rf test_tasmout
 
 

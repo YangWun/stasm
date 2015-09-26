@@ -1,6 +1,6 @@
 shape # test_tasmout/log/imputed.shape
 
-# Command: tasm -d test_tasmout -w ../tasm/shapes/muct77_short.shape 0 0 i000q|i003s|i017q
+# Command: tasm -d test_tasmout -w ../tasm/shapes/muct77_short.shape
 
 Directories E:/faces/muct/org/jpg
 

@@ -1,6 +1,6 @@
 // yaw00_lev0_p12_classic.mh: machine generated classical descriptor matcher
 //
-// Command: tasm -d test_tasmout -w ../tasm/shapes/muct77_short.shape 0 0 i000q|i003s|i017q
+// Command: tasm -d test_tasmout -w ../tasm/shapes/muct77_short.shape
 
 #ifndef STASM_YAW00_LEV0_P12_CLASSIC_MH
 #define STASM_YAW00_LEV0_P12_CLASSIC_MH
