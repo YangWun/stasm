@@ -5,15 +5,22 @@
 #ifndef STASM_SHAPEFILE_H
 #define STASM_SHAPEFILE_H
 
+#include <string>
+
 using std::string;
 
 // define hash_map (currently compiler dependent)
-#ifdef _MSC_VER // microsoft
+#if __cplusplus >= 201103L
+  #include <unordered_map>
+  using std::unordered_map;
+#elif defined _MSC_VER // microsoft
   #include <hash_map>
   using namespace stdext;
-#else  // gcc
+  #define unordered_map hash_map
+#else  // assume old gcc
   #include <ext/hash_map>
   using namespace __gnu_cxx;
+  #define unordered_map hash_map
   namespace __gnu_cxx
   {
   template<> struct hash<string> // specialization for hash_map<string>
@@ -32,7 +39,7 @@ namespace stasm
 {
 static const int MAX_MAT_DIM = 1000;   // arb, for sanity checking
 
-typedef hash_map<string, MAT> map_mat;
+typedef unordered_map<string, MAT> map_mat;
 
 class ShapeFile                        // all the data from a shape file
 {

@@ -10,12 +10,17 @@
                   // Stasm runs faster if 1
 #if CACHE
   // define hash_map,  current implementations are compiler dependent (2013)
-  #ifdef _MSC_VER // microsoft
-    #include <hash_map>
-    using namespace stdext;
-  #else          // assume gcc
-    #include <ext/hash_map>
-    using namespace __gnu_cxx;
+  #if __cplusplus >= 201103L
+	#include <unordered_map>
+	using std::unordered_map;
+  #elif defined _MSC_VER // microsoft
+	#include <hash_map>
+	using namespace stdext;
+	#define unordered_map hash_map
+  #else  // assume old gcc
+	#include <ext/hash_map>
+	using namespace __gnu_cxx;
+	#define unordered_map hash_map
   #endif
 #endif
 
@@ -35,7 +40,7 @@ static Hat hat_g;
 // hand if we revisit an xy position in the image, which is very common in ASMs.
 // (Note: an implementation with cache_g as a vector<vector VEC> was slower.)
 
-static hash_map<unsigned, VEC> cache_g; // cached descriptors
+static unordered_map<unsigned, VEC> cache_g; // cached descriptors
 static const bool TRACE_CACHE = 0;      // for checking cache hit rate
 static int ncalls_g, nhits_g;           // only used if TRACE_CACHE
 
@@ -58,7 +63,7 @@ static double GetHatFit( // args same as non CACHE version, see below
     const unsigned key(Key(x, y));
     #pragma omp critical                // prevent OpenMP concurrent access to cache_g
     {
-        hash_map<unsigned, VEC>:: const_iterator it(cache_g.find(key));
+		unordered_map<unsigned, VEC>:: const_iterator it(cache_g.find(key));
         if (it != cache_g.end())        // in cache?
         {
             descbuf = Buf(it->second);  // use cached descriptor
