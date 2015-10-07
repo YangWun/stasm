@@ -4,12 +4,15 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #if _MSC_VER // microsoft
 #include <direct.h>
 #endif
+
 #include "stasm.h"
-#include "opencv/highgui.h"
 #include "appmisc.h"
+
+#include <opencv2/imgproc/imgproc.hpp>
 
 namespace stasm
 {

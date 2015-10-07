@@ -5,6 +5,9 @@
 #include "stasm.h"
 #include "../tasm/src/tasm.h"
 
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
 namespace stasm
 {
 const double SCALE_NBRS = .3; // size of landmark numbers in images showing landmarks

@@ -4,6 +4,8 @@
 
 #include "stasm.h"
 
+#include <opencv2/imgproc/imgproc.hpp>
+
 namespace stasm
 {
 static void TraceShape(  // write an image file showing current shape on the image

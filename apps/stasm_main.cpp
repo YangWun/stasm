@@ -3,8 +3,13 @@
 // Copyright (C) 2005-2013, Stephen Milborrow
 
 #include "stasm.h"
-#include "opencv/highgui.h"
 #include "appmisc.h"
+
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#include <cstdio>
+#include <cstdlib>
 
 namespace stasm
 {

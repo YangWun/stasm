@@ -10,6 +10,8 @@
 #include "stasm.h"
 #include "../tasm/src/tasm.h"
 
+#include <opencv2/highgui/highgui.hpp>
+
 namespace stasm
 {
 static DetPar VecAsDetPar(

@@ -5,6 +5,9 @@
 #include "stasm.h"
 #include "../tasm/src/tasm.h"
 
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
 namespace stasm
 {
 typedef vector<vector<double> > TRAIN_DISTS; // [npoints] [ndesc] distances from true landmark

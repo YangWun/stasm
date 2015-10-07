@@ -4,6 +4,8 @@
 
 #include "stasm.h"
 
+#include <opencv2/imgproc/imgproc.hpp>
+
 namespace stasm
 {
 // Rotations less than 5 are treated as zero to minimize image preprocessing.

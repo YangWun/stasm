@@ -4,6 +4,8 @@
 
 #include "../stasm.h"
 
+#include <opencv2/imgproc/imgproc.hpp>
+
 namespace stasm
 {
 typedef vector<DetPar> vec_DetPar;

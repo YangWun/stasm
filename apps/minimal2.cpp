@@ -1,9 +1,11 @@
 // minimal2.cpp: Display the landmarks of possibly multiple faces in an image.
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "opencv/highgui.h"
 #include "stasm_lib.h"
+
+#include <opencv2/highgui/highgui.hpp>
+
+#include <cstdio>
+#include <cstdlib>
 
 static void error(const char* s1, const char* s2)
 {

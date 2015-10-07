@@ -5,12 +5,14 @@
 // Copyright (C) 2005-2013, Stephen Milborrow
 
 #include "stasm.h"
-#include "opencv/highgui.h"
 #include "../appmisc.h"
 #include "../shapefile/shapefile.h"
 #include "../shapefile/stasm_regex.h"
 #include "fitmeas.h"
 #include "fm29.h"
+
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 namespace stasm
 {
