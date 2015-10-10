@@ -63,6 +63,10 @@ int stasm_init_ext(        // extended version of stasm_init
     void*       detparams) // in: NULL or face detector parameters
 {
     int returnval = 1;     // assume success
+#if TRACE_IMAGES
+	// default path, will be changed by actual one if needed
+	strcpy(imgpath_g, "tmp.png");
+#endif
     CatchOpenCvErrs();
     try
     {
@@ -114,7 +118,6 @@ int stasm_open_image_ext(  // extended version of stasm_open_image
     CatchOpenCvErrs();
     try
     {
-        CV_Assert(imgpath && STRNLEN(imgpath, SLEN) < SLEN);
         CV_Assert(multiface == 0 || multiface == 1);
         CV_Assert(minwidth >= 1 && minwidth <= 100);
 
@@ -123,6 +126,7 @@ int stasm_open_image_ext(  // extended version of stasm_open_image
         img_g = Image(height, width,(unsigned char*)img);
 
 #if TRACE_IMAGES
+		CV_Assert(imgpath && STRNLEN(imgpath, SLEN) < SLEN);
         strcpy(imgpath_g, imgpath); // save the image path (for naming debug images)
 #endif
         // call the face detector to detect the face rectangle(s)
@@ -136,16 +140,18 @@ int stasm_open_image_ext(  // extended version of stasm_open_image
     return returnval;
 }
 
-int stasm_open_image(      // call once per image, detect faces
-    const char* img,       // in: gray image data, top left corner at 0,0
-    int         width,     // in: image width
-    int         height,    // in: image height
-    const char* imgpath,   // in: image path, used only for err msgs and debug
-    int         multiface, // in: 0=return only one face, 1=allow multiple faces
-    int         minwidth)  // in: min face width as percentage of img width
+// call once per image, detect faces
+int stasm_open_image(
+		const char* img,  // in: gray image data, top left corner at 0,0
+		int width,  // in: image width
+		int height,  // in: image height
+		const char* image_path,  // used only for err msgs and debug (can be 0)
+		int multiface,  // in: 0=return only one face, 1=allow multiple faces
+		int minwidth)   // in: min face width as percentage of img width
 {
-    return stasm_open_image_ext(img, width, height, imgpath,
-                                multiface, minwidth, NULL);
+	return stasm_open_image_ext(
+			img, width, height, image_path,
+			multiface, minwidth, NULL);
 }
 
 int stasm_search_auto_ext( // extended version of stasm_search_auto
@@ -214,23 +220,25 @@ int stasm_search_auto( // call repeatedly to find all faces
     return stasm_search_auto_ext(foundface, landmarks, NULL);
 }
 
-int stasm_search_single(   // wrapper for stasm_search_auto and friends
-    int*        foundface, // out: 0=no face, 1=found face
-    float*      landmarks, // out: x0, y0, x1, y1, ..., caller must allocate
-    const char* img,       // in: gray image data, top left corner at 0,0
-    int         width,     // in: image width
-    int         height,    // in: image height
-    const char* imgpath,   // in: image path, used only for err msgs and debug
-    const char* datadir)   // in: directory of face detector files
+// wrapper for stasm_search_auto and friends
+int stasm_search_single(
+		int* foundface,  // out: 0=no face, 1=found face
+		float* landmarks,  // out: x0, y0, x1, y1, ..., caller must allocate
+		const char* img,  // in: gray image data, top left corner at 0,0
+		int width,  // in: image width
+		int height,  // in: image height
+		const char* image_path,  // used only for err msgs and debug (can be 0)
+		const char* datadir)  // in: directory of face detector files
 {
-    if (!stasm_init(datadir, 0 /*trace*/))
-        return false;
+	if (!stasm_init(datadir, 0 /*trace*/))
+		return false;
 
-    if (!stasm_open_image(img, width, height, imgpath,
-                          0 /*multiface*/, 10 /*minwidth*/))
-        return false;
+	if (!stasm_open_image(
+			img, width, height, image_path,
+			0 /*multiface*/, 10 /*minwidth*/))
+		return false;
 
-    return stasm_search_auto(foundface, landmarks);
+	return stasm_search_auto(foundface, landmarks);
 }
 
 int stasm_search_pinned(    // call after the user has pinned some points

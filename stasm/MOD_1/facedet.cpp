@@ -5,6 +5,7 @@
 #include "../stasm.h"
 
 #include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 namespace stasm
 {
@@ -149,8 +150,6 @@ static void TraceFaces(        // write image showing detected face rects
     const Image&      img,     // in
     const char*       path)    // in
 {
-#if TRACE_IMAGES // will be 0 unless debugging (defined in stasm.h)
-
     CImage cimg; cvtColor(img, cimg, CV_GRAY2BGR); // color image
     for (int iface = 0; iface < NSIZE(detpars); iface++)
     {
@@ -170,7 +169,6 @@ static void TraceFaces(        // write image showing detected face rects
     lprintf("%s\n", path);
     if (!cv::imwrite(path, cimg))
         Err("Cannot write %s", path);
-#endif
 }
 
 void FaceDet::DetectFaces_( // call once per image to find all the faces
@@ -182,24 +180,30 @@ void FaceDet::DetectFaces_( // call once per image to find all the faces
 {
     CV_Assert(user == NULL);
     DetectFaces(detpars_, img, minwidth);
+#if TRACE_IMAGES
     char tracepath[SLEN];
     sprintf(tracepath, "%s_00_unsortedfacedet.bmp", Base(imgpath));
     TraceFaces(detpars_, img, tracepath);
+#endif
     DiscardMissizedFaces(detpars_);
     if (multiface) // order faces on increasing distance from left margin
     {
-        sort(detpars_.begin(), detpars_.end(), IncreasingLeftMargin);
+		sort(detpars_.begin(), detpars_.end(), IncreasingLeftMargin);
+#if TRACE_IMAGES
         sprintf(tracepath, "%s_05_facedet.bmp", Base(imgpath));
         TraceFaces(detpars_, img, tracepath);
+#endif
     }
     else
     {
         // order faces on decreasing width, keep only the first (the largest face)
         sort(detpars_.begin(), detpars_.end(), DecreasingWidth);
+#if TRACE_IMAGES
         sprintf(tracepath, "%s_05_sortedfaces.bmp", Base(imgpath));
         TraceFaces(detpars_, img, tracepath);
-        if (NSIZE(detpars_))
-            detpars_.resize(1);
+#endif
+		if (!detpars_.empty())
+			detpars_.resize(1);
     }
     iface_ = 0; // next invocation of NextFace_ must get first face
 }
